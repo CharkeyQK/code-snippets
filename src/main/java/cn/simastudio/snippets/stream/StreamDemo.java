@@ -1,9 +1,11 @@
 package cn.simastudio.snippets.stream;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BinaryOperator;
+import java.util.function.Function;
 
 /**
  * Created by chenqk on 2017/5/4.
@@ -60,6 +62,12 @@ public class StreamDemo {
         });
 
         System.out.println(reduceResult);
+
+        Function<String, String> function = s -> s + Instant.now();
+        Function<String, String> function2 = s -> s + "#";
+        Function<String, String> function1 = function.andThen(function2);
+        nameList.stream().map(function1).forEach(System.out::println);
     }
+
 
 }
