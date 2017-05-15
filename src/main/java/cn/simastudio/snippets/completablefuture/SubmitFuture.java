@@ -29,11 +29,13 @@ public class SubmitFuture {
             }
         });
         System.out.println("To be end; Future.get() will be block until the thread finished running.");
+        System.out.println("Check if done? " + future.isDone());
         try {
             System.out.println(future.get());
         } catch (ExecutionException e) {
             e.printStackTrace();
         } finally {
+            System.out.println("Check if done? " + future.isDone());
             executor.shutdown();
         }
     }
