@@ -21,12 +21,8 @@ public class SubmitFuture {
         ExecutorService executor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, unit, queue);
         // Callable -> call()
         Future<String> future = executor.submit(() -> {
-            try {
-                TimeUnit.SECONDS.sleep(3);
-                return "Charkey";
-            } catch (InterruptedException e) {
-                return "ERROR";
-            }
+            TaskCollection.doTask_500ms();
+            return "Charkey";
         });
         System.out.println("To be end; Future.get() will be block until the thread finished running.");
         System.out.println("Check if done? " + future.isDone());

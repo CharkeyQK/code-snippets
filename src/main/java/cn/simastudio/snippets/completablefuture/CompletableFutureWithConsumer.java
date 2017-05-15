@@ -12,14 +12,10 @@ public class CompletableFutureWithConsumer {
         ExecutorService executor = new ThreadPoolExecutor(2, 5, 60, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
 
         CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> {
-            try {
-                TimeUnit.SECONDS.sleep(3);
-                // execute by threadPool thread
-                System.out.println(Thread.currentThread().getName());
-                return "Charkey";
-            } catch (InterruptedException e) {
-                return "ERROR";
-            }
+            TaskCollection.doTask_500ms();
+            // execute by threadPool thread
+            System.out.println(Thread.currentThread().getName());
+            return "Charkey";
         }, executor);
 
         // Consumer -> accept(String s)

@@ -10,14 +10,14 @@ public class CompletableFutureThenCombine {
 
     public static void main(String[] args) {
         ExecutorService executor = new ThreadPoolExecutor(2, 5, 60, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
-        CompletableFuture<Long> future1 = CompletableFuture.supplyAsync(() -> new CompletableFutureThenCombine().doJob1());
-        CompletableFuture<Long> future2 = CompletableFuture.supplyAsync(() -> new CompletableFutureThenCombine().doJob2());
+        CompletableFuture<Long> future1 = CompletableFuture.supplyAsync(TaskCollection::doTask_100ms);
+        CompletableFuture<Long> future2 = CompletableFuture.supplyAsync(TaskCollection::doTask_200ms);
 
         // thenCombine
         // BiFunction -> apply(Long a, Long b)
         CompletableFuture<Long> resultFuture = future2.thenCombine(future1, (result1, result2) -> result1 + result2);
         try {
-            System.out.println(resultFuture.get());
+            System.out.println("ThenCombine result: " + resultFuture.get());
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
@@ -51,24 +51,6 @@ public class CompletableFutureThenCombine {
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
-    }
-
-    public Long doJob1() {
-        try {
-            Thread.sleep(300L);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return 1L;
-    }
-
-    public Long doJob2() {
-        try {
-            Thread.sleep(500L);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return 2L;
     }
 
 }
