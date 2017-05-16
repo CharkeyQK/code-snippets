@@ -2,8 +2,10 @@ package cn.simastudio.snippets.completablefuture;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by chenqk on 2017/5/16.
@@ -29,4 +31,9 @@ public class CompletableFutureSequence {
         return allDoneFuture.thenApply(v -> futures.stream().map(CompletableFuture::join).collect(Collectors.<T>toList()));
     }
 
+    public static <T> CompletableFuture<List<T>> sequence(Stream<CompletableFuture<T>> futures) {
+        // Objects.nonNull == future != null
+        List<CompletableFuture<T>> futureList = futures.filter(Objects::nonNull).collect(Collectors.toList());
+        return sequence(futureList);
+    }
 }
