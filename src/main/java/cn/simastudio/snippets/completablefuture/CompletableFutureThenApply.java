@@ -6,7 +6,7 @@ import java.util.function.Function;
 /**
  * Created by chenqk on 2017/5/15.
  */
-public class CompletableFutureThenSupply {
+public class CompletableFutureThenApply {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         ExecutorService executor = new ThreadPoolExecutor(2, 5, 60, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
